@@ -5,8 +5,8 @@ function App() {
   return (
     <div className="App">
      <WeekContainer/>
-     <footer class="text-center p-3">
-        Copyright © 2020 <a target="_blank" href="https://uyen.dev/">Natalie Nguyen</a>. All Rights Reserved.
+     <footer className="text-center p-3">
+        Copyright © 2020 <a target="_blank" rel="noopener noreferrer" href="https://uyen.dev/">Natalie Nguyen</a>. All Rights Reserved.
       </footer>
     </div>
   );
