@@ -4,7 +4,7 @@ import React from 'react';
 const DegreeToggle = ({degreeType, updateForecastDegree}) => {
   return (
     <React.Fragment>
-    <div className="form-check form-check-inline">
+    <div className="form-check form-check-inline p-3">
         <input
         className="form-check-input"
         type="radio"
@@ -14,7 +14,7 @@ const DegreeToggle = ({degreeType, updateForecastDegree}) => {
         checked={degreeType === "celsius"}
         onChange={updateForecastDegree}
         />
-        <label className="form-check-label" for="celsius">Celsius</label>
+        <label className="form-check-label" htmlFor="celsius">Celsius</label>
       </div>
       <div className="form-check form-check-inline">
         <input
@@ -26,7 +26,7 @@ const DegreeToggle = ({degreeType, updateForecastDegree}) => {
         checked={degreeType === "fahrenheit"}
         onChange={updateForecastDegree}
         />
-        <label className="form-check-label" for="farenheit">Farenheit</label>
+        <label className="form-check-label" htmlFor="farenheit">Farenheit</label>
       </div>
     </React.Fragment>
   )
