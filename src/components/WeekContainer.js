@@ -70,6 +70,8 @@ class WeekContainer extends React.Component {
     fetch(api_url)
       .then(res => res.json())
       .then(data => {
+        this.setState({city:data.city.name});
+        //console.log("fetch data:",data.city.name);
         const dailyData = data.list.filter(reading =>
           reading.dt_txt.includes("18:00:00")
         );
