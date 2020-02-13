@@ -4,7 +4,7 @@ import DegreeToggle from "./DegreeToggle";
 import Search from "./Search";
 import apiConfig from "../config/apikey";
 //api.openweathermap.org/data/2.5/forecast?q={city name}&appid={your api key}
-const WEATHERURL = `https://api.openweathermap.org/data/2.5/forecast?units=imperial&`;
+const WEATHERURL = `http://api.openweathermap.org/data/2.5/forecast?units=imperial&`;
 //const WEATHERURL = `http://api.openweathermap.org/data/2.5/forecast?zip=11102&units=imperial&APPID=${apiConfig.open_weather_map_key}`;
 class WeekContainer extends React.Component {
   constructor() {
