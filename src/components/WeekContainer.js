@@ -4,6 +4,7 @@ import TodayCard from "./TodayCard";
 import DegreeToggle from "./DegreeToggle";
 import Search from "./Search";
 import apiConfig from "../config/apikey";
+import constConfig from "../config/constant";
 import Helpers from "../lib/Helpers";
 import Error from "./Error";
 import LoadingScreen from "react-loading-screen";
@@ -19,7 +20,7 @@ class WeekContainer extends React.Component {
       fullData: [],
       dailyData: [],
       todayData: [],
-      degreeType: "fahrenheit",
+      degreeType: constConfig.F,
       city: "",
       country: "US",
       showError: false,
@@ -62,7 +63,7 @@ class WeekContainer extends React.Component {
   //change C-> or F to C
   updateForecastDegree = event => {
     this.setState({
-      degreeType: event.target.value
+      degreeType: event.target.id
     });
   };
 

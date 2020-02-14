@@ -44,5 +44,21 @@
   width: 100%;
   }
 
+.degree{
+  text-decoration: none;
+}
+
+.degree:hover{
+  text-decoration: none;
+}
+
+.degreeSelected{
+  color:#338ef9;
+}
+
+.degreeNotSelected{
+  color:#6c757d;
+}
+
 
 
