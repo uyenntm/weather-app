@@ -1,5 +1,6 @@
 import React from "react";
 import DayCard from "./DayCard";
+import TodayCard from "./TodayCard";
 import DegreeToggle from "./DegreeToggle";
 import Search from "./Search";
 import apiConfig from "../config/apikey";
@@ -17,6 +18,7 @@ class WeekContainer extends React.Component {
     this.state = {
       fullData: [],
       dailyData: [],
+      todayData: [],
       degreeType: "fahrenheit",
       city: "",
       country: "US",
@@ -26,10 +28,11 @@ class WeekContainer extends React.Component {
     };
     console.log("constructor");
   }
+
   componentDidMount = () => {
     console.log("componentDidMount:");
+    this._asyncRequest = this.getWeatherCurrentLocation();
     //get weather of current location
-    this.getWeatherCurrentLocation();
   };
 
   //get weather of current location
@@ -37,22 +40,22 @@ class WeekContainer extends React.Component {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
         //console.log(position);
-        let api_url =
+        let weather_url =
+          WEATHER_URL +
+          "&lat=" +
+          position.coords.latitude +
+          "&lon=" +
+          position.coords.longitude;
+        let forecast_url =
           FORECAST_URL +
           "&lat=" +
           position.coords.latitude +
           "&lon=" +
           position.coords.longitude;
-        console.log(api_url);
-        console.log(
-          "weather:",
-          WEATHER_URL +
-            "&lat=" +
-            position.coords.latitude +
-            "&lon=" +
-            position.coords.longitude
-        );
-        this.fetchWeather(api_url);
+        console.log("forecast:", forecast_url);
+
+        console.log("weather:", weather_url);
+        this.fetchWeather(weather_url, forecast_url);
       });
     }
   }
@@ -64,12 +67,34 @@ class WeekContainer extends React.Component {
   };
 
   //get weather data from api_url
-  fetchWeather = api_url => {
-    console.log(api_url);
-    fetch(api_url)
+  fetchWeather = (weather_url, forecast_url) => {
+    console.log(weather_url);
+    console.log(forecast_url);
+    //get current weather data
+    fetch(weather_url)
       .then(res => res.json())
       .then(data => {
-        this.setState({ city: data.city.name, showError: false, showLoading:false});
+        console.log("Current Weather:");
+        console.log(data);
+        this.setState({
+          todayData: data
+        });
+      })
+      .catch(err => {
+        console.log(`Error fetching current weather for ${this.state.city}:`, err);
+        this.setState({ error: "Error: Location not found", showError: true });
+
+        //setError(err.message);
+      });
+    //get forecast_url data
+    fetch(forecast_url)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          city: data.city.name,
+          showError: false,
+          showLoading: false
+        });
         console.log("fetch data:", data.list);
         const dailyData = data.list.filter(reading =>
           reading.dt_txt.includes("00:00:00")
@@ -92,10 +117,12 @@ class WeekContainer extends React.Component {
   handleSubmit = (city = "") => {
     console.log("HandleSubmit:", city);
     //remove space between name of city
-    let api_url =
+    let forecast_url =
       FORECAST_URL + `&q=${city.split(" ").join("%20")},${this.state.country}`;
+    let weather_url =
+      WEATHER_URL + `&q=${city.split(" ").join("%20")},${this.state.country}`;
     //console.log(api_url);
-    this.fetchWeather(api_url);
+    this.fetchWeather(weather_url, forecast_url);
   };
 
   formatDayCards = () => {
@@ -108,23 +135,29 @@ class WeekContainer extends React.Component {
     ));
   };
 
+  formatTodayCards = () => {
+    return (<TodayCard reading={this.state.todayData} degreeType={this.state.degreeType}/>)
+     
+  };
+
   render() {
     return (
       <div className="container">
-        <h1 className="display-1 jumbotron">5-Day Forecast</h1>
+        <h1 className="display-4 ">5-Day Forecast</h1>
         <Search handleSubmit={this.handleSubmit} />
         {this.state.showError ? <Error error={this.state.error} /> : ""}
-        {this.state.showLoading ? 
+        {this.state.showLoading ? (
           <LoadingScreen
+            children=""
             loading={true}
             bgColor="#f1f1f1"
             spinnerColor="#9ee5f8"
             textColor="#676767"
             text="Loading..."
           ></LoadingScreen>
-         : 
+        ) : (
           ""
-        }
+        )}
         <h5 className="display-5 text-muted">
           {Helpers.Capitalize(this.state.city)}
         </h5>
@@ -134,6 +167,7 @@ class WeekContainer extends React.Component {
           updateForecastDegree={this.updateForecastDegree}
         />
         <div className="row justify-content-center">
+          {this.formatTodayCards()}
           {this.formatDayCards()}
         </div>
       </div>
