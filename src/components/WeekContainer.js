@@ -168,8 +168,10 @@ class WeekContainer extends React.Component {
           updateForecastDegree={this.updateForecastDegree}
         />
         <div className="row justify-content-center">
+        <ul class="list">
           {this.formatTodayCards()}
           {this.formatDayCards()}
+          </ul>
         </div>
       </div>
     );

@@ -23,10 +23,9 @@ const TodayCard = ({ reading, degreeType }) => {
   //console.log(reading.main);
   //console.log(reading.main.temp_min,reading.main.temp_max);
   return (
-      
-    <div className="col-sm-2 ">
-      <div className="card border border-danger">
-        <h3 className="card-title pt-2">Today</h3>
+    <li class="card list-item border border-danger col-sm-2">
+   
+         <h3 className="card-title pt-2">Today</h3>
         <p className="text-muted">{moment(newDate).format('MMMM D')}</p>
         <img src={imgURL} alt="" className="weather-icon  img-thumbnail"/>
         <p>
@@ -38,11 +37,9 @@ const TodayCard = ({ reading, degreeType }) => {
         <span className="tmp_min text-primary">{degreeType === "celsius" ? Helpers.F2C(Math.round(reading.main.temp_min)) + "°C "
           : Math.round(reading.main.temp_min) + "°F "}</span> */}
         </p>
-        <div className="card-body">
-          <p className="card-text">{Helpers.Capitalize(reading.weather[0].description)}</p>
-        </div>
-      </div>
-    </div>
+        <p className="card-text">{Helpers.Capitalize(reading.weather[0].description)}</p>
+        
+    </li>
   )
 }
 
