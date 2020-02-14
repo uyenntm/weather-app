@@ -1,14 +1,14 @@
 
 import React from 'react';
 
-const Search = ({ updateCity,handleSubmit}) => {
+const Search = ({ updateCity,handleSubmit,handleKey}) => {
   return (
     <React.Fragment>
              <form  className="input-group searchBar pb-3">
       <input 
         placeholder="Enter a city"
         className="form-control" name="city" id="city"
-        onChange={updateCity}
+        onChange={updateCity} 
        />
        
      <span className="input-group-btn">

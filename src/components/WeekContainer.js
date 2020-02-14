@@ -75,7 +75,7 @@ class WeekContainer extends React.Component {
         this.setState({city:data.city.name});
         console.log("fetch data:",data.list);
         const dailyData = data.list.filter(reading =>
-          reading.dt_txt.includes("09:00:00")
+          reading.dt_txt.includes("00:00:00")
         );
         console.log("daily data:",dailyData);
         this.setState(
@@ -89,13 +89,22 @@ class WeekContainer extends React.Component {
 
   //handle user submit request onlick button
   handleSubmit = event => {
-    console.log("HandleSubmit");
+    console.log("HandleSubmit:", event);
    //remove space between name of city
     let api_url =
       WEATHERURL +
       `&q=${this.state.city.split(' ').join('%20')},${this.state.country}`;
     //console.log(api_url);
     this.fetchWeather(api_url);
+  };
+
+  handleKey = event => {
+    console.log(event.key);
+    if (event.keyCode === 13) {
+      //event.preventDefault();
+      console.log("enter");
+      //this.handleSubmit(event);
+     }
   };
 
   formatDayCards = () => {
@@ -112,7 +121,7 @@ class WeekContainer extends React.Component {
     return (
       <div className="container">
         <h1 className="display-1 jumbotron">5-Day Forecast</h1>
-        <Search updateCity={this.updateCity} handleSubmit={this.handleSubmit} />
+        <Search updateCity={this.updateCity} handleSubmit={this.handleSubmit} handleKeyUp={this.handleKeyUp} />
         <h5 className="display-5 text-muted">
           {Helpers.Capitalize(this.state.city)}
         </h5>
