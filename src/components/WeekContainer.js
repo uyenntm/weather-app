@@ -4,10 +4,11 @@ import DegreeToggle from "./DegreeToggle";
 import Search from "./Search";
 import apiConfig from "../config/apikey";
 import Helpers from "../lib/Helpers";
+import Error from "./Error";
 //api.openweathermap.org/data/2.5/forecast?q={city name}&appid={your api key}
 const FORECAST_URL = `https://api.openweathermap.org/data/2.5/forecast?units=imperial&appid=${apiConfig.open_weather_map_key}`;
 //api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
- const WEATHER_URL = `https://api.openweathermap.org/data/2.5/weather?units=imperial&appid=${apiConfig.open_weather_map_key}`;
+const WEATHER_URL = `https://api.openweathermap.org/data/2.5/weather?units=imperial&appid=${apiConfig.open_weather_map_key}`;
 //const WEATHERURL = `http://api.openweathermap.org/data/2.5/forecast?zip=11102&units=imperial&APPID=${apiConfig.open_weather_map_key}`;
 class WeekContainer extends React.Component {
   constructor(props) {
@@ -17,86 +18,82 @@ class WeekContainer extends React.Component {
       dailyData: [],
       degreeType: "fahrenheit",
       city: "",
-      country: "US"
-     
+      country: "US",
+      showError: false,
+      error: ""
     };
-    this.getWeatherCurrentLocation();
+    console.log("constructor");
   }
   componentDidMount = () => {
     console.log("componentDidMount:");
     //get weather of current location
-   
-    
+    this.getWeatherCurrentLocation();
   };
 
   //get weather of current location
- getWeatherCurrentLocation(){
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((position) => {
-        let api_url =FORECAST_URL + "&lat=" + position.coords.latitude + "&lon=" 
-        + position.coords.longitude;
-        //console.log(api_url);
-        console.log("weather:",WEATHER_URL+"&lat=" + position.coords.latitude + "&lon=" 
-        + position.coords.longitude);
+  getWeatherCurrentLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        //console.log(position);
+        let api_url =
+          FORECAST_URL +
+          "&lat=" +
+          position.coords.latitude +
+          "&lon=" +
+          position.coords.longitude;
+        console.log(api_url);
+        console.log(
+          "weather:",
+          WEATHER_URL +
+            "&lat=" +
+            position.coords.latitude +
+            "&lon=" +
+            position.coords.longitude
+        );
         this.fetchWeather(api_url);
-    });
+      });
+    }
   }
- }
   //change C-> or F to C
   updateForecastDegree = event => {
-    this.setState(
-      {
-        degreeType: event.target.value
-      }
-    );
+    this.setState({
+      degreeType: event.target.value
+    });
   };
 
-  // updateCity = event => {
-  //   this.setState(
-  //     {
-  //       city: event.target.value
-  //     }
-  //   );
-  // };
   //get weather data from api_url
   fetchWeather = api_url => {
     console.log(api_url);
     fetch(api_url)
       .then(res => res.json())
       .then(data => {
-        this.setState({city:data.city.name});
+        this.setState({ city: data.city.name, showError: false });
         console.log("fetch data:", data.list);
         const dailyData = data.list.filter(reading =>
           reading.dt_txt.includes("00:00:00")
         );
-        console.log("daily data:",dailyData);
-        this.setState(
-          {
-            fullData: data.list,
-            dailyData: dailyData
-          }
-        );
+        console.log("daily data:", dailyData);
+        this.setState({
+          fullData: data.list,
+          dailyData: dailyData
+        });
+      })
+      .catch(err => {
+        console.log(`Error fetching forecast for ${this.state.city}:`, err);
+        this.setState({ error: "Error: Location not found", showError: true });
+
+        //setError(err.message);
       });
   };
 
   //handle user submit request onlick button
-  handleSubmit = (city = '') => {
+  handleSubmit = (city = "") => {
     console.log("HandleSubmit:", city);
-   //remove space between name of city
+    //remove space between name of city
     let api_url =
-    FORECAST_URL +
-      `&q=${city.split(' ').join('%20')},${this.state.country}`;
+      FORECAST_URL + `&q=${city.split(" ").join("%20")},${this.state.country}`;
     //console.log(api_url);
     this.fetchWeather(api_url);
-  };
-
-  handleKey = event => {
-    console.log(event.key);
-    if (event.keyCode === 13) {
-      //event.preventDefault();
-      console.log("enter");
-      //this.handleSubmit(event);
-     }
   };
 
   formatDayCards = () => {
@@ -113,7 +110,8 @@ class WeekContainer extends React.Component {
     return (
       <div className="container">
         <h1 className="display-1 jumbotron">5-Day Forecast</h1>
-        <Search updateCity={this.updateCity} handleSubmit={this.handleSubmit} handleKeyUp={this.handleKeyUp} />
+        <Search handleSubmit={this.handleSubmit} />
+        {this.state.showError ? <Error error={this.state.error} /> : ""}
         <h5 className="display-5 text-muted">
           {Helpers.Capitalize(this.state.city)}
         </h5>
