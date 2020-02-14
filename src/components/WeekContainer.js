@@ -5,6 +5,7 @@ import Search from "./Search";
 import apiConfig from "../config/apikey";
 import Helpers from "../lib/Helpers";
 import Error from "./Error";
+import LoadingScreen from "react-loading-screen";
 //api.openweathermap.org/data/2.5/forecast?q={city name}&appid={your api key}
 const FORECAST_URL = `https://api.openweathermap.org/data/2.5/forecast?units=imperial&appid=${apiConfig.open_weather_map_key}`;
 //api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
@@ -20,6 +21,7 @@ class WeekContainer extends React.Component {
       city: "",
       country: "US",
       showError: false,
+      showLoading: true,
       error: ""
     };
     console.log("constructor");
@@ -67,7 +69,7 @@ class WeekContainer extends React.Component {
     fetch(api_url)
       .then(res => res.json())
       .then(data => {
-        this.setState({ city: data.city.name, showError: false });
+        this.setState({ city: data.city.name, showError: false, showLoading:false});
         console.log("fetch data:", data.list);
         const dailyData = data.list.filter(reading =>
           reading.dt_txt.includes("00:00:00")
@@ -112,6 +114,17 @@ class WeekContainer extends React.Component {
         <h1 className="display-1 jumbotron">5-Day Forecast</h1>
         <Search handleSubmit={this.handleSubmit} />
         {this.state.showError ? <Error error={this.state.error} /> : ""}
+        {this.state.showLoading ? 
+          <LoadingScreen
+            loading={true}
+            bgColor="#f1f1f1"
+            spinnerColor="#9ee5f8"
+            textColor="#676767"
+            text="Loading..."
+          ></LoadingScreen>
+         : 
+          ""
+        }
         <h5 className="display-5 text-muted">
           {Helpers.Capitalize(this.state.city)}
         </h5>
