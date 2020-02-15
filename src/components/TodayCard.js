@@ -19,7 +19,7 @@ const TodayCard = ({ reading, degreeType }) => {
   return (
     <li className="card list-item border border-danger col-sm-2">
    
-         <h3 className="card-title pt-2">Today</h3>
+         <h4 className="card-title pt-2">Today</h4>
         <p className="text-muted">{moment(newDate).format('MMMM D')}</p>
         <img src={imgURL} alt="" className="weather-icon  img-thumbnail"/>
         <p>
