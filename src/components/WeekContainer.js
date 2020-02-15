@@ -1,6 +1,7 @@
 import React from "react";
 import DayCard from "./DayCard";
 import TodayCard from "./TodayCard";
+//import TodayChart from "./TodayChart";
 import DegreeToggle from "./DegreeToggle";
 import Search from "./Search";
 import apiConfig from "../config/apikey";
@@ -167,8 +168,9 @@ class WeekContainer extends React.Component {
           degreeType={this.state.degreeType}
           updateForecastDegree={this.updateForecastDegree}
         />
+        {/* <TodayChart></TodayChart> */}
         <div className="row justify-content-center">
-        <ul class="list">
+        <ul className="list">
           {this.formatTodayCards()}
           {this.formatDayCards()}
           </ul>

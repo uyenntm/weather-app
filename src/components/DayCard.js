@@ -15,7 +15,7 @@ const DayCard = ({ reading, degreeType }) => {
   //console.log(reading.main);
   //console.log(reading.main.temp_min,reading.main.temp_max);
   return (
-    <li class="card list-item  col-sm-2">
+    <li className="card list-item  col-sm-2">
      <h3 className="card-title pt-2">{moment(newDate).format('dddd')}</h3>
         <p className="text-muted">{moment(newDate).format('MMMM D')}</p>
         <img src={imgURL} alt="" className="weather-icon  img-thumbnail"/>

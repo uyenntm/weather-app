@@ -7,15 +7,9 @@ const TodayCard = ({ reading, degreeType }) => {
   let newDate = new Date();
   const weekday = reading.dt * 1000
   newDate.setTime(weekday)
-  let weather = {};
   if(reading.weather === undefined) return null;
 
-     
   const imgURL = `https://openweathermap.org/img/wn/${reading.weather[0].icon}@2x.png`;
-
-
-  
-  
   //https://openweathermap.org/img/wn/01d@2x.png
   //const imgURL = `https://openweathermap.org/img/wn/${reading.weather[0].icon}@2x.png`;
   //console.log(imgURL);
@@ -23,7 +17,7 @@ const TodayCard = ({ reading, degreeType }) => {
   //console.log(reading.main);
   //console.log(reading.main.temp_min,reading.main.temp_max);
   return (
-    <li class="card list-item border border-danger col-sm-2">
+    <li className="card list-item border border-danger col-sm-2">
    
          <h3 className="card-title pt-2">Today</h3>
         <p className="text-muted">{moment(newDate).format('MMMM D')}</p>
