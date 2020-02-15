@@ -63,11 +63,12 @@
 /* Flex Item - TodayCard and DayCard*/
 .list {
   display: flex;
+  padding: 5%;
   flex-wrap: wrap;
 }
 @media all and (min-width: 40em) {
   .list-item {
-    width: 50%;
+    width: 40%;
   }
 }
 @media all and (min-width: 60em) {
