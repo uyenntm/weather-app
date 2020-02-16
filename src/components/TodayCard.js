@@ -21,7 +21,7 @@ const TodayCard = ({ reading, degreeType }) => {
    
          <h4 className="card-title pt-2">Today</h4>
         <p className="text-muted">{moment(newDate).format('MMMM D')}</p>
-        <img src={imgURL} alt="" className="weather-icon  img-thumbnail"/>
+        <div className="thumbnail"><img src={imgURL} alt="" className="weather-icon img-responsive  "/></div> 
         <p>
         {degreeType === "celsius" ?
         Helpers.F2C(Math.round(reading.main.temp))+ "°C "  : Math.round(reading.main.temp) + "°F"}
