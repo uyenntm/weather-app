@@ -99,7 +99,7 @@ class WeekContainer extends React.Component {
         });
         console.log("fetch data:", data.list);
         const dailyData = data.list.filter(reading =>
-          reading.dt_txt.includes("09:00:00")
+          reading.dt_txt.includes("18:00:00")
         );
         console.log("daily data:", dailyData);
         this.setState({
