@@ -17,7 +17,7 @@ const DayCard = ({ reading, degreeType }) => {
   return (
     <li className="card list-item  col-sm-2">
      <h4 className="card-title pt-2">{moment(newDate).format('ddd')}</h4>
-        <p className="text-muted">{moment(newDate).format('MMMM D')}</p>
+        <p className="text-muted">{moment(newDate).format('MMM D')}</p>
         <div className="thumbnail"><img src={imgURL} alt="" className="weather-icon img-responsive  "/></div> 
         <p>
         {degreeType === "celsius" ?
