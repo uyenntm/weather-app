@@ -1,7 +1,7 @@
 import React from "react";
 import DayCard from "./DayCard";
 import TodayCard from "./TodayCard";
-//import TodayChart from "./TodayChart";
+
 import DegreeToggle from "./DegreeToggle";
 import Search from "./Search";
 import apiConfig from "../config/apikey";
@@ -175,6 +175,7 @@ class WeekContainer extends React.Component {
           {this.formatDayCards()}
           </ul>
         </div>
+       
       </div>
     );
   }

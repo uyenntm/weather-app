@@ -1,4 +1,8 @@
 
+run 
+npm start
+http://localhost:3000/
+
 Online https://natalie-weather.netlify.com/
 
 First time load, display weather of current location
