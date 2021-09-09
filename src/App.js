@@ -6,7 +6,7 @@ function App() {
     <div className="App">
      <WeekContainer/>
      <footer className="text-center p-3">
-        Copyright © 2020 <a target="_blank" rel="noopener noreferrer" href="https://uyen.dev/">Natalie Nguyen</a>. All Rights Reserved.
+        Copyright ©{new Date().getFullYear()} <a target="_blank" rel="noopener noreferrer" href="https://uyen.dev/">Natalie Nguyen</a>. All Rights Reserved.
       </footer>
     </div>
   );
